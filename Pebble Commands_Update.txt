@@ -1,0 +1,32 @@
+Simple concatenate
+
+Don't work, but validate...
+{{ "thankyou#{Language}.wav" }}
+{{ "thankyou" ~ gLanguage ~ ".wav" }}
+
+This one works...
+thankyou{{ gLanguage }}.wav
+
+{{var[1].directReports[0].preferredFullName}}
+
+{{callbackNumber | replace({"+":""})}}
+
+{{now() | epoch(inMillis=true) | date('dd.MM', timeZone="Australia/Sydney") }}
+
+{{email | split('@') | last }}
+
+{{today == "2412" or today== "2512" or today == "0101"}}
+
+{{NewPhoneContact.ANI | slice(6)}}
+
+{{NewPhoneContact.ANI | slice(0,3)}}
+
+{{NewPhoneContact.ANI | slice (NewPhoneContact.ANI.length - 10,NewPhoneContact.ANI.length)}}
+
+{{ stringToSplit | split("\|") | first }}
+
+{{varName|trim}}
+
+{{now() | epoch(inMillis=true) | date('HH:mm', timeZone="Australia/Perth") }}
+
+{{ now() | epoch(inMillis=true) | date('MM/dd', timeZone="Australia/Perth") }}
