@@ -1,0 +1,104 @@
+SQL Query:
+
+select * from Customer where Acct_Number = {Data.Session.acctNumber}
+
+Caller_Input:
+{Data.Element.Menu1.value}{Data.Element.Menu2.value}
+
+Ext VXML 0:
+{Data.Element.DBLookup.First_Name};{Data.Element.DBLookup.Last_Name};{Data.Element.DBLookup.Acct_Status}
+
+Ext VXML 1:
+{Data.Element.DBLookup.Acct_Number}{Data.Element.DBLookup.Acct_Type}{Data.Element.DBLookup.Claim_Number}{Data.Element.DBLookup.Join_Date}
+============================
+Discovery 5
+
+Consider if:
+
+Step 1, 2, & 3:
+
+Call.user.microapp.caller_input=="HomeSales"
+
+Step 4, 5, & 6:
+
+Call.user.microapp.caller_input=="HomeClaims"
+
+Step 7, 8, & 9:
+
+Call.user.microapp.caller_input=="HomeLdgmnts"
+
+============================
+Caller Name: 
+PV1:
+concatenate(before(";",Call.user.microapp.FromExtVXML[0])," ",before(";",after(";",Call.user.microapp.FromExtVXML[0])))
+
+Acct Number
+PV2:
+left(Call.user.microapp.FromExtVXML[1],4)
+
+Acct Type
+PV3:
+mid(Call.user.microapp.FromExtVXML[1],5,3)
+
+Claim Number
+PV5:
+mid(Call.user.microapp.FromExtVXML[1],8,5)
+
+Lodgement Date
+PV6:
+right(Call.user.microapp.FromExtVXML[1],10)
+
+Claim Status
+PV7:
+after(";", after (";", Call.user.microapp.FromExtVXML[0]))
+
+Type of Request
+PV10:
+Call.user.microapp.caller_input
+
+Caller Input = HomeNN
+Call.user.microapp.caller_input
+"HomeNN"
+
+Caller Input = MotorNN
+Call.user.microapp.caller_input
+"MotorNN"
+
+Caller Input = LifeNN
+Call.user.microapp.caller_input
+"LifeNN"
+
+Set Layout to DCH_NN
+Call.user.Layout
+"DCH_NN"
+
+CLID Node
+Variable Expression: Call.user.microapp.caller_input
+Comment: Contains Type of Request from Caller Input - Menu1 Menu2
+HomeSales
+HomeClaims
+HomeLdgmnts
+MotorSales
+MotorClaims
+MotorLdgmnts
+LifeSales
+LifeClaims
+LifeLdgmnts
+
+Node 43 - Call Type Node:
+concatenate(Call.user.microapp.caller_input,"_NN")
+
+Node 44 - PQ Node:
+Call.PeripheralVariable4
+
+
+Discovery 9: 
+If Node:
+Call.user.microapp.caller_input!=""
+
+PV8
+concatenate(Call.DialedNumberString,"; ",Call.CallingLineID,"; ",Call.PeripheralVariable4,"; ",Call.PeripheralVariable2)
+
+
+Discovery 10: 
+<gadget>/3rdpartygadget/files/HWGadgetNN/HWGadgetNN.xml</gadget>
